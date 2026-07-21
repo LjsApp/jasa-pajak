@@ -1,0 +1,1 @@
+ALTER TABLE public.company_info ADD COLUMN IF NOT EXISTS maps_embed_url text NOT NULL DEFAULT '';

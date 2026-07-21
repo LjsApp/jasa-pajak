@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+Allow: /blog
+Allow: /blog/
+
+# Blokir halaman admin dan dashboard dari pengindeksan
+Disallow: /admin/
+Disallow: /laporan
+Disallow: /clients
+Disallow: /paket
+Disallow: /artikel
+Disallow: /settings
+Disallow: /kalkulator
+
+# Sitemap
+Sitemap: https://layanan-jasa-solusi.vercel.app/sitemap.xml
