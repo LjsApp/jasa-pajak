@@ -3,6 +3,7 @@ import { useCompany, usePackages, useArticles } from "@/lib/store";
 import { formatRupiah } from "@/lib/format";
 import { useState, useEffect } from "react";
 import { useT } from "@/lib/i18n";
+import { SCROLL_TARGET_KEY } from "@/components/SiteNavbar";
 import {
   Phone, Mail, MapPin, Instagram, MessageCircle, Music2, Star, Check, X, Gift,
   ArrowRight, Shield, Clock, Users, FileCheck, Menu, ChevronDown,
@@ -144,6 +145,19 @@ function Landing() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [calcOpen, setCalcOpen] = useState(false);
   const [selArticle, setSelArticle] = useState<(typeof latest)[0] | null>(null);
+
+  // Scroll ke section jika datang dari halaman lain (via SiteNavbar)
+  useEffect(() => {
+    const target = sessionStorage.getItem(SCROLL_TARGET_KEY);
+    if (target) {
+      sessionStorage.removeItem(SCROLL_TARGET_KEY);
+      // Beri waktu agar DOM sudah render
+      setTimeout(() => {
+        document.getElementById(target)?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }, []);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     window.addEventListener("scroll", onScroll);
