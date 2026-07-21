@@ -55,6 +55,7 @@ export function SiteNavbar() {
     { id: "tentang", label: t.nav_about },
     { id: "layanan", label: t.nav_services },
     { id: "paket", label: t.nav_packages },
+    { id: "blog", label: t.nav_blog, isBlog: true },
     { id: "faq", label: t.nav_faq },
     { id: "kontak", label: t.nav_contact },
   ];
@@ -70,13 +71,14 @@ export function SiteNavbar() {
 
           <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-700">
             {navItems.map((n) => (
-              <button key={n.id} onClick={() => handleNavClick(n.id)} className="hover:text-[#0b2545] transition-colors">
-                {n.label}
-              </button>
+              n.isBlog ? (
+                <Link key={n.id} to="/blog" className="hover:text-[#0b2545] transition-colors">{n.label}</Link>
+              ) : (
+                <button key={n.id} onClick={() => handleNavClick(n.id)} className="hover:text-[#0b2545] transition-colors">
+                  {n.label}
+                </button>
+              )
             ))}
-            <Link to="/blog" className="hover:text-[#0b2545] transition-colors">
-              {t.nav_blog}
-            </Link>
             <button onClick={() => setCalcOpen(true)} className="inline-flex items-center gap-1.5 hover:text-[#0b2545] transition-colors">
               <Calculator className="h-4 w-4" /> {t.nav_calc}
             </button>
@@ -104,13 +106,16 @@ export function SiteNavbar() {
           <div className="lg:hidden border-t bg-white">
             <nav className="px-4 py-3 flex flex-col gap-1 text-sm font-medium">
               {navItems.map((n) => (
-                <button key={n.id} onClick={() => handleNavClick(n.id)} className="py-2.5 px-2 rounded hover:bg-slate-50 text-slate-700 text-left w-full">
-                  {n.label}
-                </button>
+                n.isBlog ? (
+                  <Link key={n.id} to="/blog" onClick={() => setMenuOpen(false)} className="py-2.5 px-2 rounded hover:bg-slate-50 text-slate-700">
+                    {n.label}
+                  </Link>
+                ) : (
+                  <button key={n.id} onClick={() => handleNavClick(n.id)} className="py-2.5 px-2 rounded hover:bg-slate-50 text-slate-700 text-left w-full">
+                    {n.label}
+                  </button>
+                )
               ))}
-              <Link to="/blog" onClick={() => setMenuOpen(false)} className="py-2.5 px-2 rounded hover:bg-slate-50 text-slate-700">
-                {t.nav_blog}
-              </Link>
               <button onClick={() => { setMenuOpen(false); setCalcOpen(true); }} className="py-2.5 px-2 rounded hover:bg-slate-50 text-slate-700 inline-flex items-center gap-2 text-left">
                 <Calculator className="h-4 w-4" /> {t.nav_calc}
               </button>
