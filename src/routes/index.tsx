@@ -155,14 +155,18 @@ function Landing() {
       ? `${formatRupiah(p.price, { withSymbol: true })} – ${formatRupiah(p.priceMax, { withSymbol: true })}`
       : formatRupiah(p.price, { withSymbol: true });
 
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const navItems = [
-    { href: "#beranda", label: t.nav_home },
-    { href: "#tentang", label: t.nav_about },
-    { href: "#layanan", label: t.nav_services },
-    { href: "#paket", label: t.nav_packages },
-    { href: "#artikel", label: t.nav_blog },
-    { href: "#faq", label: t.nav_faq },
-    { href: "#kontak", label: t.nav_contact },
+    { id: "beranda", label: t.nav_home },
+    { id: "tentang", label: t.nav_about },
+    { id: "layanan", label: t.nav_services },
+    { id: "paket", label: t.nav_packages },
+    { id: "artikel", label: t.nav_blog },
+    { id: "faq", label: t.nav_faq },
+    { id: "kontak", label: t.nav_contact },
   ];
 
   return (
@@ -170,13 +174,13 @@ function Landing() {
       {/* NAVBAR */}
       <header className={`sticky top-0 z-40 bg-white transition-shadow ${scrolled ? "shadow-md" : "shadow-sm"}`}>
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <a href="#beranda" className="flex items-center gap-2.5">
+          <button onClick={() => scrollToSection("beranda")} className="flex items-center gap-2.5">
             <img src="/logo.jpeg" alt={company.name} className="h-9 w-9 object-contain rounded" />
             <div className="font-bold text-[#0b2545] text-base leading-tight">{company.name}</div>
-          </a>
+          </button>
           <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-700">
             {navItems.map((n) => (
-              <a key={n.href} href={n.href} className="hover:text-[#0b2545] transition-colors">{n.label}</a>
+              <button key={n.id} onClick={() => scrollToSection(n.id)} className="hover:text-[#0b2545] transition-colors">{n.label}</button>
             ))}
             <button onClick={() => setCalcOpen(true)} className="inline-flex items-center gap-1.5 hover:text-[#0b2545] transition-colors">
               <Calculator className="h-4 w-4" /> {t.nav_calc}
@@ -186,6 +190,10 @@ function Landing() {
             <button onClick={() => setCalcOpen(true)} className="lg:hidden inline-flex items-center justify-center h-9 w-9 rounded-md border border-slate-200 hover:bg-slate-50" aria-label="Kalkulator Pajak" title="Kalkulator Pajak">
               <Calculator className="h-4 w-4 text-[#0b2545]" />
             </button>
+            <Link to="/admin/login"
+              className="hidden lg:inline-flex items-center gap-1.5 px-3 py-2 rounded-md border border-slate-200 hover:bg-slate-50 text-slate-500 hover:text-[#0b2545] font-medium text-sm transition-all">
+              <Shield className="h-3.5 w-3.5" /> Login Admin
+            </Link>
             <a href={waLink} target="_blank" rel="noopener noreferrer"
               className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-md bg-[#16a34a] hover:bg-[#15803d] text-white font-semibold text-sm shadow-sm transition-all hover:shadow-md">
               <MessageCircle className="h-4 w-4" /> {t.cta_wa}
@@ -199,11 +207,14 @@ function Landing() {
           <div className="lg:hidden border-t bg-white">
             <nav className="px-4 py-3 flex flex-col gap-1 text-sm font-medium">
               {navItems.map((n) => (
-                <a key={n.href} href={n.href} onClick={() => setMenuOpen(false)} className="py-2.5 px-2 rounded hover:bg-slate-50 text-slate-700">{n.label}</a>
+                <button key={n.id} onClick={() => { scrollToSection(n.id); setMenuOpen(false); }} className="py-2.5 px-2 rounded hover:bg-slate-50 text-slate-700 text-left w-full">{n.label}</button>
               ))}
               <button onClick={() => { setMenuOpen(false); setCalcOpen(true); }} className="py-2.5 px-2 rounded hover:bg-slate-50 text-slate-700 inline-flex items-center gap-2 text-left">
                 <Calculator className="h-4 w-4" /> {t.nav_calc}
               </button>
+              <Link to="/admin/login" onClick={() => setMenuOpen(false)} className="py-2.5 px-2 rounded hover:bg-slate-50 text-slate-500 inline-flex items-center gap-2">
+                <Shield className="h-4 w-4" /> Login Admin
+              </Link>
               <a href={waLink} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-md bg-[#16a34a] text-white font-semibold">
                 <MessageCircle className="h-4 w-4" /> {t.cta_wa}
               </a>
@@ -226,9 +237,9 @@ function Landing() {
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-[#16a34a] hover:bg-[#15803d] text-white font-semibold shadow-md hover:shadow-lg transition-all">
                 <MessageCircle className="h-5 w-5" /> {t.cta_consult}
               </a>
-              <a href="#layanan" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md border-2 border-[#0b2545] text-[#0b2545] hover:bg-[#0b2545] hover:text-white font-semibold transition-all">
+              <button onClick={() => scrollToSection("layanan")} className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md border-2 border-[#0b2545] text-[#0b2545] hover:bg-[#0b2545] hover:text-white font-semibold transition-all">
                 {t.cta_see_services} <ArrowRight className="h-4 w-4" />
-              </a>
+              </button>
             </div>
             <div className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-600">
               <div className="flex items-center gap-1.5"><Check className="h-4 w-4 text-[#16a34a]" /> {t.trust_fast}</div>
@@ -554,7 +565,7 @@ function Landing() {
             <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wider">{t.footer_menu}</h4>
             <ul className="space-y-2 text-sm">
               {navItems.map((n) => (
-                <li key={n.href}><a href={n.href} className="hover:text-white transition-colors">{n.label}</a></li>
+                <li key={n.id}><button onClick={() => scrollToSection(n.id)} className="hover:text-white transition-colors text-left">{n.label}</button></li>
               ))}
               <li><button onClick={() => setCalcOpen(true)} className="hover:text-white transition-colors text-left">{t.nav_calc}</button></li>
               <li><Link to="/blog" className="hover:text-white transition-colors">{t.nav_blog}</Link></li>
